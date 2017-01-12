@@ -10,7 +10,9 @@ If you already have a Makefile  in your repository, be aware because this will o
 
 ## Usage
 ### Main
-In order to actually use CConf in your project, all you need is to call 
+In order to actually use CConf in your project, all you need is to include "cconf.h" and call the intializer:
+
+`#include "cconf.h"`
 
 `cconf_init();`
 
