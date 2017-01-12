@@ -9,6 +9,8 @@ void yyerror(char * str);
 
 %%
 
+[#].*\n		;	/* Ignore comments */
+
 [a-zA-Z0-9]+	{
 			yylval.string = strdup(yytext);
 			return VARIABLE;
