@@ -1,0 +1,4 @@
+*.dSYM
+lex.yy.c
+y.*
+bin/*
