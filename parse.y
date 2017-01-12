@@ -41,12 +41,11 @@ statement:
 	|
 	VARIABLE
 	{
-		hash_t *tmp;
-		tmp = configure_find($1);
+		char *val = configure_value($1);
 
-		if (tmp != FALSE)
+		if (val != FALSE)
 		{
-			printf("%s\n", tmp->value);
+			printf("%s\n", val);
 		}
 		else
 		{
