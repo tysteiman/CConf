@@ -33,19 +33,20 @@ void configure_create(char *key, char *value)
       table->value = value;
       table->next  = NULL;
     }
-  else {
-    hash_t *head = table;
+  else
+    {
+      hash_t *head = table;
 
-    while (head->next != NULL)
-      {
-        head = head->next;
-      }
+      while (head->next != NULL)
+        {
+          head = head->next;
+        }
 
-    head->next        = malloc(sizeof(hash_t));
-    head->next->key   = key;
-    head->next->value = value;
-    head->next->next  = NULL;
-  }
+      head->next        = malloc(sizeof(hash_t));
+      head->next->key   = key;
+      head->next->value = value;
+      head->next->next  = NULL;
+    }
 }
 
 void configure_print_table()
