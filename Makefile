@@ -6,4 +6,4 @@ all:
 
 run:
 	make
-	if [ -f ./configure ]; then ./configure; fi
+	if [ -f ./bin/configure ]; then ./bin/configure; fi
