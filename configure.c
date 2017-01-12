@@ -89,7 +89,7 @@ hash_t *configure_find(char *key)
 
   while (head != NULL)
     {
-      if (strncmp(head->key, key, strlen(key)) == 0)
+      if (configure_streql(head->key, key))
         {
           return head;
         }
@@ -100,4 +100,16 @@ hash_t *configure_find(char *key)
     }
 
   return FALSE;
+}
+
+int configure_streql(char *str1, char *str2)
+{
+  if (strncmp(str1, str2, strlen(str2)) == 0)
+    {
+      return TRUE;
+    }
+  else
+    {
+      return FALSE;
+    }
 }
