@@ -20,6 +20,7 @@ int main(int argc, char **argv)
   else
     {
       printf("ERROR: No configuration file found!\n");
+      exit(EXIT_FAILURE);
     }
 
   configure_free(table);
