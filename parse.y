@@ -22,7 +22,6 @@ int yylex();
 }
 
 %token <string> VARIABLE
-%token <string> STRING
 
 %%
 
@@ -37,3 +36,19 @@ statement:
 		configure_create($1, $3);
 		configure_print_table();
 	}
+	|
+	VARIABLE
+	{
+		hash_t *tmp;
+		tmp = configure_find($1);
+
+		if (tmp != FALSE)
+		{
+			printf("%s\n", tmp->value);
+		}
+		else
+		{
+			printf("ERROR: Key '%s' does not exist.\n", $1);
+		}
+	}
+	;
