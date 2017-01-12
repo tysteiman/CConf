@@ -71,7 +71,7 @@ void configure_free(hash_t *table)
     }
 }
 
-hash_t *configure_lookup(char *key)
+hash_t *configure_find(char *key)
 {
   hash_t *head;
   head = table;
@@ -80,7 +80,6 @@ hash_t *configure_lookup(char *key)
     {
       if (strncmp(head->key, key, strlen(key)) == 0)
         {
-          printf("Key: %s --> %s\n", head->key, head->value);
           return head;
         }
       else
@@ -89,6 +88,5 @@ hash_t *configure_lookup(char *key)
         }
     }
 
-  printf("Key %s not found.\n", key);
   return FALSE;
 }

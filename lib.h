@@ -17,6 +17,6 @@ hash_t *table;
 void configure_create(char *key, char *value);
 void configure_print_table();
 void configure_free(hash_t *table);
-hash_t *configure_lookup(char *key);
+hash_t *configure_find(char *key);
 
 #endif
