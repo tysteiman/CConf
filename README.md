@@ -12,11 +12,11 @@ If you already have a Makefile  in your repository, be aware because this will o
 ### Main
 In order to actually use CConf in your project, all you need is to call 
 
-`configure_init();` 
+`cconf_init();`
 
 in your main() function. Also, at the end of your program or when you are done using configurations you will need to call:
 	
-`configure_free();`
+`cconf_free();`
 
 ### Using configuration variables
 #### .cconf file
@@ -28,17 +28,17 @@ Inside of your .cconf file simply set variables as such:
 `foo = bar`
 
 #### Retrieving variables
-`configure_value("foo");` will in this case return "bar". That simple!
+`cconf_value("foo");` will in this case return "bar". That simple!
 ##### Note
-All you need to do to return values is create a char ptr (char *val = configure_value('foo')).
+All you need to do to return values is create a char ptr (char *val = cconf_value('foo')).
 
 If you want to overwrite a node's value, you can retrieve the entire node by using:
 
-`configure_find("foo")`
+`cconf_find("foo")`
 
 This will retire an entire node containing key, value, & the next k/v pair in the table.
 
-`hash_t *lookup = configure_find("foo");  printf("%s\n", lookup->value);`
+`hash_t *lookup = cconf_find("foo");  printf("%s\n", lookup->value);`
 
 Would in this case print "bar".
 

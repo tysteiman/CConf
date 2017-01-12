@@ -1,5 +1,5 @@
-#ifndef CONFIGURE_LIB
-#define CONFIGURE_LIB
+#ifndef CCONF_LIB
+#define CCONF_LIB
 
 #include <stdio.h>
 
@@ -24,14 +24,14 @@ typedef struct Hash {
 hash_t *table;
 
 /* BEGIN DECLS */
-void     configure_init();
-void     configure_create(char *key, char *value);
-void     configure_print_table();
-void     configure_free(hash_t *table);
-hash_t * configure_find(char *key);
-int      configure_streql(char *str1, char *str2);
-int      configure_assert(char *str);
-char   * configure_value(char *key);
-char   * configure_file();
+void     cconf_init();
+void     cconf_create(char *key, char *value);
+void     cconf_print_table();
+void     cconf_free(hash_t *table);
+hash_t * cconf_find(char *key);
+int      cconf_streql(char *str1, char *str2);
+int      cconf_assert(char *str);
+char   * cconf_value(char *key);
+char   * cconf_file();
 
 #endif

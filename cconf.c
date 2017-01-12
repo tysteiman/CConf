@@ -5,11 +5,11 @@
 
 #include "cconf.h"
 
-void configure_init()
+void cconf_init()
 {
   table = NULL;
 
-  char *conf = configure_file();
+  char *conf = cconf_file();
 
   if (conf)
     {
@@ -30,7 +30,7 @@ void configure_init()
  * file is located in the current file, it will return that file. If not,
  * it will check to see if there is a .cconf file found in HOME.
  */
-char *configure_file()
+char *cconf_file()
 {
   char *lookup[CCONF_FILE_LOOKUP_TABLE];
   lookup[0]  = "./.cconf";
@@ -67,7 +67,7 @@ char *configure_file()
  * the initial values as the key/value args passed. Otherwise it simply
  * creates another key/value record in the table for later.
  */
-void configure_create(char *key, char *value)
+void cconf_create(char *key, char *value)
 {
   /* if head has not been initialized yet */
   if (table == NULL)
@@ -80,7 +80,7 @@ void configure_create(char *key, char *value)
   else
     {
       hash_t *head = table;
-      hash_t *tmp  = configure_find(key);
+      hash_t *tmp  = cconf_find(key);
 
       /* Simply overwrite the value if key already exists. */
       if (tmp)
@@ -102,18 +102,18 @@ void configure_create(char *key, char *value)
         }
     }
 
-  char *debug = configure_value("debug_print_table");
-  if (debug && configure_assert(debug))
+  char *debug = cconf_value("debug_print_table");
+  if (debug && cconf_assert(debug))
     {
-      configure_print_table();
+      cconf_print_table();
     }
 }
 
-int configure_assert(char *str)
+int cconf_assert(char *str)
 {
-  if (configure_streql(str, "true") ||
-      configure_streql(str, "TRUE") ||
-      configure_streql(str, "1"))
+  if (cconf_streql(str, "true") ||
+      cconf_streql(str, "TRUE") ||
+      cconf_streql(str, "1"))
     {
       return TRUE;
     }
@@ -127,7 +127,7 @@ int configure_assert(char *str)
  * Used primarily for debugging, this simply loops through the lookup table
  * and prints each key/value pair.
  */
-void configure_print_table()
+void cconf_print_table()
 {
   hash_t *head = table;
   while (head != NULL)
@@ -141,7 +141,7 @@ void configure_print_table()
 /**
  * Loop through the lookup table and free each node.
  */
-void configure_free(hash_t *table)
+void cconf_free(hash_t *table)
 {
   hash_t *tmp;
 
@@ -160,14 +160,14 @@ void configure_free(hash_t *table)
  * be changed depending on the result of this function when needed
  * (mainly for overwriting values).
  */
-hash_t *configure_find(char *key)
+hash_t *cconf_find(char *key)
 {
   hash_t *head;
   head = table;
 
   while (head != NULL)
     {
-      if (configure_streql(head->key, key))
+      if (cconf_streql(head->key, key))
         {
           return head;
         }
@@ -184,7 +184,7 @@ hash_t *configure_find(char *key)
  * Simple wrapper around strncmp to compare 2 strings. Return integer
  * based on whether the two strings match or not.
  */
-int configure_streql(char *str1, char *str2)
+int cconf_streql(char *str1, char *str2)
 {
   if (strncmp(str1, str2, strlen(str2)) == 0)
     {
@@ -199,13 +199,13 @@ int configure_streql(char *str1, char *str2)
 /**
  * Find a specific entry from the lookup table by key however this will
  * return the actual string value of 'value' if found. Otherwise return false.
- * This utilizes configure_value() to fetch the entire node, then return only
+ * This utilizes cconf_value() to fetch the entire node, then return only
  * the value itself. This is useful for fetching back the raw node's value itself
  * instead of the entire node.
  */
-char *configure_value(char *key)
+char *cconf_value(char *key)
 {
-  hash_t *tmp = configure_find(key);
+  hash_t *tmp = cconf_find(key);
 
   if (!tmp)
     {

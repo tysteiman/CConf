@@ -35,6 +35,6 @@ statement:
 	|
 	VARIABLE '=' VARIABLE
 	{
-		configure_create($1, $3);
+		cconf_create($1, $3);
 	}
 	;
