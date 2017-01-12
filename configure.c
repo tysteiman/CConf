@@ -36,16 +36,26 @@ void configure_create(char *key, char *value)
   else
     {
       hash_t *head = table;
+      hash_t *tmp  = configure_find(key);
 
-      while (head->next != NULL)
+      /* Simply overwrite the value if key already exists. */
+      if (tmp)
         {
-          head = head->next;
+          tmp->value = value;
         }
+      /* Log new entry when key is unique (not entered) */
+      else
+        {
+          while (head->next != NULL)
+            {
+              head = head->next;
+            }
 
-      head->next        = malloc(sizeof(hash_t));
-      head->next->key   = key;
-      head->next->value = value;
-      head->next->next  = NULL;
+          head->next        = malloc(sizeof(hash_t));
+          head->next->key   = key;
+          head->next->value = value;
+          head->next->next  = NULL;
+        }
     }
 }
 
