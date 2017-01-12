@@ -6,6 +6,7 @@ extern FILE * yyin;
 
 #define TRUE 1
 #define FALSE 0
+#define CCONF_FILE_LOOKUP_TABLE 2
 
 /**
  * Main structure for our lookup table. A simple linked list
@@ -27,5 +28,6 @@ void configure_free(hash_t *table);
 hash_t *configure_find(char *key);
 int configure_streql(char *str1, char *str2);
 char *configure_value(char *key);
+char *configure_file();
 
 #endif

@@ -1,7 +1,7 @@
 %{
 
 #include <stdio.h>
-#include "configure.h"
+#include "cconf.h"
 
 int yywrap()
 {

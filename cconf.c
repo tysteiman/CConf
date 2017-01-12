@@ -1,26 +1,65 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-#include "configure.h"
+#include "cconf.h"
 
 int main(int argc, char **argv)
 {
   table = NULL;
 
-  if (argc > 1)
-    {
-      yyin = fopen(argv[1], "r");
-    }
+  char *conf = configure_file();
 
-  yyparse();
-
-  if (argc > 1)
+  if (conf)
     {
+      yyin = fopen(conf, "r");
+      yyparse();
       fclose(yyin);
+    }
+  else
+    {
+      printf("ERROR: No configuration file found!\n");
     }
 
   configure_free(table);
+}
+
+/**
+ * Return configuration file based on path. The local folder
+ * takes precedence over the HOME directory. Therefore if a .cconf
+ * file is located in the current file, it will return that file. If not,
+ * it will check to see if there is a .cconf file found in HOME.
+ */
+char *configure_file()
+{
+  char *lookup[CCONF_FILE_LOOKUP_TABLE];
+  lookup[0]  = "./.cconf";
+
+  char *home = getenv("HOME");
+  char *path = "/.cconf";
+  size_t len = strlen(home) + strlen(path) + 1;
+
+  char *full = malloc(len);
+
+  strcpy(full, home);
+  strcat(full, path);
+
+  lookup[1] = full;
+
+  free(full);
+
+  int i;
+
+  for (i = 0; i <= (CCONF_FILE_LOOKUP_TABLE - 1); i++)
+    {
+      if (access(lookup[i], F_OK|R_OK) != -1)
+        {
+          return lookup[i];
+        }
+    }
+
+  return FALSE;
 }
 
 /**
