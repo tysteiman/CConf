@@ -22,12 +22,12 @@ typedef struct Hash {
 hash_t *table;
 
 /* BEGIN DECLS */
-void configure_create(char *key, char *value);
-void configure_print_table();
-void configure_free(hash_t *table);
-hash_t *configure_find(char *key);
-int configure_streql(char *str1, char *str2);
-char *configure_value(char *key);
-char *configure_file();
+void     configure_create(char *key, char *value);
+void     configure_print_table();
+void     configure_free(hash_t *table);
+hash_t * configure_find(char *key);
+int      configure_streql(char *str1, char *str2);
+char   * configure_value(char *key);
+char   * configure_file();
 
 #endif
