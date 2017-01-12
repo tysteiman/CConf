@@ -1,6 +1,6 @@
 all:
-	lex *.l
-	yacc -d *.y
+	lex lex.l
+	yacc -d parse.y
 	if [ ! -d ./bin ]; then mkdir bin; fi
 	gcc -o bin/configure *.c
 
