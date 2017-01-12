@@ -31,6 +31,8 @@ program:
 	;
 
 statement:
+	'\n'
+	|
 	VARIABLE '=' VARIABLE
 	{
 		configure_create($1, $3);
