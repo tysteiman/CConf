@@ -19,7 +19,7 @@ int main(int argc, char **argv)
     }
   else
     {
-      printf("ERROR: No configuration file found!\n");
+      printf("ERROR: No configuration file found! Please create a ./.cconf or ~/.cconf file.\n");
       exit(EXIT_FAILURE);
     }
 
