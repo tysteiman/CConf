@@ -36,6 +36,5 @@ statement:
 	VARIABLE '=' VARIABLE
 	{
 		configure_create($1, $3);
-		configure_print_table();
 	}
 	;

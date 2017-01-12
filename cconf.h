@@ -1,6 +1,8 @@
 #ifndef CONFIGURE_LIB
 #define CONFIGURE_LIB
 
+#include <stdio.h>
+
 /* We need to be able to change which file is getting parsed. */
 extern FILE * yyin;
 
@@ -22,11 +24,13 @@ typedef struct Hash {
 hash_t *table;
 
 /* BEGIN DECLS */
+void     configure_init();
 void     configure_create(char *key, char *value);
 void     configure_print_table();
 void     configure_free(hash_t *table);
 hash_t * configure_find(char *key);
 int      configure_streql(char *str1, char *str2);
+int      configure_assert(char *str);
 char   * configure_value(char *key);
 char   * configure_file();
 

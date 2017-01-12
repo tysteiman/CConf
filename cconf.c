@@ -5,7 +5,7 @@
 
 #include "cconf.h"
 
-int main(int argc, char **argv)
+void configure_init()
 {
   table = NULL;
 
@@ -22,8 +22,6 @@ int main(int argc, char **argv)
       printf("ERROR: No configuration file found! Please create a ./.cconf or ~/.cconf file.\n");
       exit(EXIT_FAILURE);
     }
-
-  configure_free(table);
 }
 
 /**
@@ -102,6 +100,26 @@ void configure_create(char *key, char *value)
           head->next->value = value;
           head->next->next  = NULL;
         }
+    }
+
+  char *debug = configure_value("debug_print_table");
+  if (configure_assert(debug))
+    {
+      configure_print_table();
+    }
+}
+
+int configure_assert(char *str)
+{
+  if (configure_streql(str, "true") ||
+      configure_streql(str, "TRUE") ||
+      configure_streql(str, "1"))
+    {
+      return TRUE;
+    }
+  else
+    {
+      return FALSE;
     }
 }
 

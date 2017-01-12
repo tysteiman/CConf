@@ -1,0 +1,23 @@
+;; print entire table after each new entry.
+debug_print_table = TRUE
+
+
+###########################################################
+# This is a target page that simply acts as a dummy conf
+# file to be parsed by the cconf interpreter.
+# whenever new syntaxes are added they can be added below
+# to quickly test our interpreter and parser.
+###########################################################
+
+;; normal variable decls
+
+foo = bar
+tyler = steiman
+hello = world
+;; here we will reset the tyler variable and it should
+;; just get overwritten.
+tyler = awesome
+
+
+;; another block of configuration
+james = johnathans

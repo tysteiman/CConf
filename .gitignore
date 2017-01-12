@@ -3,3 +3,4 @@ lex.yy.c
 y.*
 bin/*
 .cconf
+test.*
