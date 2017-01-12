@@ -103,7 +103,7 @@ void configure_create(char *key, char *value)
     }
 
   char *debug = configure_value("debug_print_table");
-  if (configure_assert(debug))
+  if (debug && configure_assert(debug))
     {
       configure_print_table();
     }
