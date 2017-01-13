@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <regex.h>
 
 #include "cconf.h"
 
@@ -122,6 +123,55 @@ int cconf_assert(char *str)
     {
       return TRUE;
     }
+}
+
+int cconf_int(char *key)
+{
+  char *val = cconf_value(key);
+
+  if (val != FALSE)
+    {
+      return atoi(val);
+    }
+  else
+    {
+      return FALSE;
+    }
+}
+
+int cconf_match(char *pattern, char *subj)
+{
+  printf("PATTERN: %s\tSUBJECT: %s\n", pattern, subj);
+
+  regex_t regex;
+  int res;
+  char msg[256];
+
+  res = regcomp(&regex, pattern, 0);
+
+  if (res)
+    {
+      fprintf(stderr, "ERROR: can not compile regex.\n");
+      exit(EXIT_FAILURE);
+    }
+
+  res = regexec(&regex, subj, 0, NULL, 0);
+
+  if (!res)
+    {
+      return TRUE;
+    }
+  else if (res == REG_NOMATCH)
+    {
+      return FALSE;
+    }
+  else
+    {
+      fprintf(stderr, "ERROR: unexpected regex error.");
+      exit(EXIT_FAILURE);
+    }
+
+  regfree(&regex);
 }
 
 /**
