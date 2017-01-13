@@ -103,7 +103,7 @@ void cconf_create(char *key, char *value)
     }
 
   char *debug = cconf_value("debug_print_table");
-  if (debug && cconf_assert(debug))
+  if (cconf_assert(debug))
     {
       cconf_print_table();
     }
@@ -111,15 +111,16 @@ void cconf_create(char *key, char *value)
 
 int cconf_assert(char *str)
 {
-  if (cconf_streql(str, "true") ||
-      cconf_streql(str, "TRUE") ||
-      cconf_streql(str, "1"))
+  if (str == FALSE                ||
+      (!cconf_streql(str, "true") &&
+       !cconf_streql(str, "TRUE") &&
+       !cconf_streql(str, "1")))
     {
-      return TRUE;
+      return FALSE;
     }
   else
     {
-      return FALSE;
+      return TRUE;
     }
 }
 
