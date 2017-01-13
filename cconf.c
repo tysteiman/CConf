@@ -8,6 +8,12 @@
 
 int yyparse();
 
+/**
+ * Main initialization process for cconf. This will set our configuration
+ * table to nil, and make sure we have a config file to parse. If we have
+ * a file that is accessible we start yyparse() which will begin the parsing
+ * sequence and build cconf.table
+ */
 void cconf_init()
 {
   cconf.table = NULL;
@@ -22,7 +28,7 @@ void cconf_init()
     }
   else
     {
-      printf("ERROR: No configuration file found! Please create a ./.cconf or ~/.cconf file.\n");
+      printf("ERROR: No configuration file found! Please set: '%s'\n", cconf.file);
       exit(EXIT_FAILURE);
     }
 }
@@ -39,7 +45,7 @@ char *cconf_file()
     {
       cconf.file = "./.cconf";
     }
-  
+
   char *lookup[CCONF_FILE_LOOKUP_TABLE];
   lookup[0]  = cconf.file;
 
@@ -110,6 +116,7 @@ void cconf_create(char *key, char *value)
         }
     }
 
+  /* if debug_print_table is set we need to print the whole table. */
   char *debug = cconf_value("debug_print_table");
   if (cconf_assert(debug))
     {
@@ -117,6 +124,12 @@ void cconf_create(char *key, char *value)
     }
 }
 
+/**
+ * Assert truthiness of a string. Since non existent values return as
+ * FALSE, we have to first make sure our passed argument isn't FALSE.
+ * then, if the string is 'true', 'TRUE', or '1', we consider it to be
+ * true and return t/f.
+ */
 int cconf_assert(char *str)
 {
   if (str == FALSE                ||
@@ -130,55 +143,6 @@ int cconf_assert(char *str)
     {
       return TRUE;
     }
-}
-
-int cconf_int(char *key)
-{
-  char *val = cconf_value(key);
-
-  if (val != FALSE)
-    {
-      return atoi(val);
-    }
-  else
-    {
-      return FALSE;
-    }
-}
-
-int cconf_match(char *pattern, char *subj)
-{
-  printf("PATTERN: %s\tSUBJECT: %s\n", pattern, subj);
-
-  regex_t regex;
-  int res;
-  char msg[256];
-
-  res = regcomp(&regex, pattern, 0);
-
-  if (res)
-    {
-      fprintf(stderr, "ERROR: can not compile regex.\n");
-      exit(EXIT_FAILURE);
-    }
-
-  res = regexec(&regex, subj, 0, NULL, 0);
-
-  if (!res)
-    {
-      return TRUE;
-    }
-  else if (res == REG_NOMATCH)
-    {
-      return FALSE;
-    }
-  else
-    {
-      fprintf(stderr, "ERROR: unexpected regex error.");
-      exit(EXIT_FAILURE);
-    }
-
-  regfree(&regex);
 }
 
 /**
@@ -275,6 +239,10 @@ char *cconf_value(char *key)
     }
 }
 
+/**
+ * Print a single value if exists. If the value does not exist return FALSE.
+ * When the value exists it will both print & return TRUE.
+ */
 int cconf_value_print(char *key)
 {
   char *val = cconf_value(key);

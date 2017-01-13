@@ -36,8 +36,6 @@ void     cconf_free(hash_t *table);
 hash_t * cconf_find(char *key);
 int      cconf_streql(char *str1, char *str2);
 int      cconf_assert(char *str);
-int      cconf_int(char *key);
-int      cconf_match(char *pattern, char *subj);
 char   * cconf_value(char *key);
 int      cconf_value_print(char *key);
 char   * cconf_file();
