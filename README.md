@@ -71,3 +71,35 @@ int main()
 }
 
 ```
+
+## Host program using cconf value
+*test.c*
+```
+
+#include "cconf.h"
+
+void log_res(int a, int b)
+{
+  int res = a + b;
+
+  if (cconf_assert(cconf_value("print_all_results")))
+    {
+      printf("Result is: %d\n", res);
+    }
+}
+
+int main()
+{
+  cconf.file = "./bin/target";
+
+  cconf_init();
+
+  int i = 5;
+  int q = 10;
+
+  log_res(i, q);
+
+  cconf_free(cconf.table);
+}
+
+```
