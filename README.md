@@ -56,3 +56,18 @@ There are some system variables that you can set in your .cconf file.
 
 - debug_print_table	
   - When true, TRUE, or 1 CConf will print the entire lookup table after each new entry. This is handy for debugging variables and getting a look at the current lookup table after a new entry.
+  
+## Sample Host Program
+*test.c*
+```
+
+#include "cconf.h"
+
+int main()
+{
+  cconf.file = "./bin/target";
+  cconf_init();
+  cconf_free(cconf.table);
+}
+
+```
