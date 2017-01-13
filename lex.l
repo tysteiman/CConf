@@ -12,7 +12,7 @@ void yyerror(char * str);
 [#].*\n		;	/* Ignore comments */
 ;;.*\n		;	/* Alternate comment */
 
-[a-zA-Z0-9_]+	{
+[a-zA-Z0-9_\-]+	{
 			yylval.string = strdup(yytext);
 			return VARIABLE;
 		}
