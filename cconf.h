@@ -60,5 +60,6 @@ int      cconf_assert(char *str);
 char   * cconf_value(char *key);
 int      cconf_value_print(char *key);
 char   * cconf_file();
+int      cconf_true(char *key);
 
 #endif

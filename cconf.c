@@ -138,8 +138,7 @@ void cconf_create(char *key, char *value, char *type)
     }
 
   /* if debug_print_table is set we need to print the whole table. */
-  char *debug = cconf_value("debug_print_table");
-  if (cconf_assert(debug))
+  if (cconf_true("debug_print_table"))
     {
       cconf_print_table();
     }
@@ -275,5 +274,20 @@ int cconf_value_print(char *key)
     {
       printf("%s\n", val);
       return TRUE;
+    }
+}
+
+/**
+ * A simple wrapper around asserting a value.
+ */
+int cconf_true(char *key)
+{
+  if (cconf_assert(cconf_value(key)))
+    {
+      return TRUE;
+    }
+  else
+    {
+      return FALSE;
     }
 }

@@ -82,7 +82,7 @@ void log_res(int a, int b)
 {
   int res = a + b;
 
-  if (cconf_assert(cconf_value("print_all_results")))
+  if (cconf_true("print_all_results"))
     {
       printf("Result is: %d\n", res);
     }
