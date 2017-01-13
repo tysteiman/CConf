@@ -24,6 +24,13 @@ in your main() function. Also, at the end of your program or when you are done u
 #### .cconf file
 In order to create a variable for use you need a .cconf file either in your project directory or in your HOME directory (~/.cconf). It is preferred you have it in your project directory, as this will always take precedence over your HOME directory.
 
+##### Overwriting the default file
+The default configuration file may be overwritten by setting the cconf.file variable in your host program (wherever your main function is). This must be set before calling cconf_init();
+
+`cconf.file = "./bin/target.ini"`
+
+This will change the default configuration to be parsed from ./.cconf to ./bin/target.ini.
+
 #### Setting variables
 Inside of your .cconf file simply set variables as such:
 

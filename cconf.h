@@ -15,13 +15,19 @@ extern FILE * yyin;
  * that allows us to enter as many records as we need.
  */
 typedef struct Hash {
-  char *key;
-  char *value;
-  struct Hash *next;
+  char        * key;
+  char        * value;
+  struct Hash * next;
 } hash_t;
 
+typedef struct CConf {
+  char   * file;
+  hash_t * table;
+} cconf_t;
+
 /* Initialize lookup table so we can access it throughout. */
-hash_t *table;
+hash_t  * table;
+cconf_t   cconf;
 
 /* BEGIN DECLS */
 void     cconf_init();

@@ -33,8 +33,13 @@ void cconf_init()
  */
 char *cconf_file()
 {
+  if (!cconf.file)
+    {
+      cconf.file = "./.cconf";
+    }
+  
   char *lookup[CCONF_FILE_LOOKUP_TABLE];
-  lookup[0]  = "./.cconf";
+  lookup[0]  = cconf.file;
 
   char *home = getenv("HOME");
   char *path = "/.cconf";
