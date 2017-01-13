@@ -6,9 +6,11 @@
 
 #include "cconf.h"
 
+int yyparse();
+
 void cconf_init()
 {
-  table = NULL;
+  cconf.table = NULL;
 
   char *conf = cconf_file();
 
@@ -76,16 +78,16 @@ char *cconf_file()
 void cconf_create(char *key, char *value)
 {
   /* if head has not been initialized yet */
-  if (table == NULL)
+  if (cconf.table == NULL)
     {
-      table        = malloc(sizeof(hash_t));
-      table->key   = key;
-      table->value = value;
-      table->next  = NULL;
+      cconf.table        = malloc(sizeof(hash_t));
+      cconf.table->key   = key;
+      cconf.table->value = value;
+      cconf.table->next  = NULL;
     }
   else
     {
-      hash_t *head = table;
+      hash_t *head = cconf.table;
       hash_t *tmp  = cconf_find(key);
 
       /* Simply overwrite the value if key already exists. */
@@ -185,7 +187,7 @@ int cconf_match(char *pattern, char *subj)
  */
 void cconf_print_table()
 {
-  hash_t *head = table;
+  hash_t *head = cconf.table;
   while (head != NULL)
     {
       printf("Key: %s\t\t-->\t\t%s\n", head->key, head->value);
@@ -219,7 +221,7 @@ void cconf_free(hash_t *table)
 hash_t *cconf_find(char *key)
 {
   hash_t *head;
-  head = table;
+  head = cconf.table;
 
   while (head != NULL)
     {
@@ -270,5 +272,19 @@ char *cconf_value(char *key)
   else
     {
       return tmp->value;
+    }
+}
+
+int cconf_value_print(char *key)
+{
+  char *val = cconf_value(key);
+  if (val == FALSE)
+    {
+      return FALSE;
+    }
+  else
+    {
+      printf("%s\n", val);
+      return TRUE;
     }
 }

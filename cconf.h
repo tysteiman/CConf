@@ -26,7 +26,6 @@ typedef struct CConf {
 } cconf_t;
 
 /* Initialize lookup table so we can access it throughout. */
-hash_t  * table;
 cconf_t   cconf;
 
 /* BEGIN DECLS */
@@ -40,6 +39,7 @@ int      cconf_assert(char *str);
 int      cconf_int(char *key);
 int      cconf_match(char *pattern, char *subj);
 char   * cconf_value(char *key);
+int      cconf_value_print(char *key);
 char   * cconf_file();
 
 #endif
