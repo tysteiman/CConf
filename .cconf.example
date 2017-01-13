@@ -1,23 +1,17 @@
-;; print entire table after each new entry.
-debug_print_table = TRUE
+;; EXAMPLE CONFIGURATION FILE
 
+;; when debug_print_table is set, it will print every value of the
+;; table after each new entry.
+debug_print_table = true
 
-###########################################################
-# This is a target page that simply acts as a dummy conf
-# file to be parsed by the cconf interpreter.
-# whenever new syntaxes are added they can be added below
-# to quickly test our interpreter and parser.
-###########################################################
+;; example boolean
+auto_casting = true
 
-;; normal variable decls
+;; example boolean
+print_all_results = true
 
-foo = bar
-tyler = steiman
-hello = world
-;; here we will reset the tyler variable and it should
-;; just get overwritten.
-tyler = awesome
+;; example string
+str = "hello world"
 
-
-;; another block of configuration
-james = johnathans
+;; example integer
+val = 5
