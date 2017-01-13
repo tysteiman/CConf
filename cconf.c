@@ -100,7 +100,7 @@ char *cconf_file()
  * the initial values as the key/value args passed. Otherwise it simply
  * creates another key/value record in the table for later.
  */
-void cconf_create(char *key, char *value)
+void cconf_create(char *key, char *value, char *type)
 {
   /* if head has not been initialized yet */
   if (cconf.table == NULL)
@@ -108,6 +108,7 @@ void cconf_create(char *key, char *value)
       cconf.table        = malloc(sizeof(hash_t));
       cconf.table->key   = key;
       cconf.table->value = value;
+      cconf.table->type  = type;
       cconf.table->next  = NULL;
     }
   else
@@ -131,6 +132,7 @@ void cconf_create(char *key, char *value)
           head->next        = malloc(sizeof(hash_t));
           head->next->key   = key;
           head->next->value = value;
+          head->next->type  = type;
           head->next->next  = NULL;
         }
     }
@@ -173,7 +175,7 @@ void cconf_print_table()
   hash_t *head = cconf.table;
   while (head != NULL)
     {
-      printf("Key: %s\t\t-->\t\t%s\n", head->key, head->value);
+      printf("Key: %s\t\t-->\t\t%s\t(%s)\n", head->key, head->value, head->type);
       head = head->next;
     }
   printf("-------------------------------------------------\n");

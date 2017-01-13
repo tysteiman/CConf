@@ -39,24 +39,33 @@ int yylex();
 
 %union {
         char * string;
+	int    integer;
 }
 
-%token  <string>        VARIABLE
-%token  <string>        STRING
+%token <string>  VARIABLE
+%token <string>  STRING
+%token <string>  INTEGER
 
 %%
 
 program:
         program statement
-        |       ;
+        |
+	;
 
 statement:
+	VARIABLE '=' INTEGER
+        {
+		cconf_create($1, $3, "integer");
+        }
+        |       
         VARIABLE '=' VARIABLE
         {
-                cconf_create($1, $3);
+		cconf_create($1, $3, "string");
         }
-        |       VARIABLE '=' STRING
-                {
-                    cconf_create($1, $3);
-                }
+        |
+        VARIABLE '=' STRING
+        {
+		cconf_create($1, $3, "string");
+        }
         ;

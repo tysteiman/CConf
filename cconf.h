@@ -37,6 +37,7 @@ extern FILE * yyin;
 typedef struct Hash {
   char        * key;
   char        * value;
+  char        * type;
   struct Hash * next;
 } hash_t;
 
@@ -50,7 +51,7 @@ cconf_t   cconf;
 
 /* BEGIN DECLS */
 void     cconf_init();
-void     cconf_create(char *key, char *value);
+void     cconf_create(char *key, char *value, char *type);
 void     cconf_print_table();
 void     cconf_free(hash_t *table);
 hash_t * cconf_find(char *key);
