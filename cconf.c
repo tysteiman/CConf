@@ -292,6 +292,9 @@ int cconf_true(char *key)
     }
 }
 
+/**
+ * Setter for custom configuration file to be parsed.
+ */
 void cconf_set_file(char *file)
 {
   cconf.file = file;

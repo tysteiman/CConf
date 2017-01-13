@@ -32,22 +32,37 @@ extern FILE * yyin;
 
 /**
  * Main structure for our lookup table. A simple linked list
- * that allows us to enter as many records as we need.
+ * that allows us to enter as many records as we need. This is
+ * to be included inside of a cconf_t struct and it should be
+ * handled that way for the sake of not having 5,000 structs
+ * throughout the application that are all connected.
+ * @todo right now the type is only signifying the type of the
+ *       value without ever getting parsed or returned as such.
+ *       This should not be the default however it would be nice
+ *       to have a helper function that would return what the
+ *       variable really is when we want to be lazy.
  */
 typedef struct Hash {
-  char        * key;
-  char        * value;
-  char        * type;
-  struct Hash * next;
+  char        * key;    /* Node's identifying key */
+  char        * value;  /* Node's value */
+  char        * type;   /* Node's type (string, integer) */
+  struct Hash * next;   /* Ptr to next node */
 } hash_t;
 
-typedef struct CConf {
-  char   * file;
-  hash_t * table;
+/**
+ * The abstraction around the lookup table itself which also
+ * contains other program meta data such as the default file name
+ * of the configuration to be parsed. This should be the only struct
+ * that is directly accessed throughout the program, everything
+ * should have to be set through cconf.table->value, etc.
+ */
+typedef struct {
+  char   * file;   /* Configuration file's name */
+  hash_t * table;  /* hash_t ptr for the lookup table */
 } cconf_t;
 
 /* Initialize lookup table so we can access it throughout. */
-cconf_t   cconf;
+cconf_t cconf;
 
 /* BEGIN DECLS */
 void     cconf_init();
