@@ -29,18 +29,23 @@ void yyerror(char * str);
 
 %%
 
-[#].*\n		;	/* Ignore comments */
-;;.*\n		;	/* Alternate comment */
+[#].*\n         ;       /* Ignore comments */
+;;.*\n          ;       /* Alternate comment */
 
-[a-zA-Z0-9_\-]+	{
-			yylval.string = strdup(yytext);
-			return VARIABLE;
-		}
+[a-zA-Z0-9_\-]+ {
+                        yylval.string = strdup(yytext);
+                        return VARIABLE;
+                }
 
-[="]		return *yytext;
+\"(\\.|[^\"])*\" {
+                        yylval.string = strdup(yytext);
+                        return STRING;
+                 }
 
-[ \t\n]		;
+[="]            return *yytext;
 
-.		yyerror("Unknown character.");
+[ \t\n]         ;
+
+.               yyerror("Unknown character.");
 
 %%

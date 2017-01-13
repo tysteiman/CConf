@@ -25,12 +25,12 @@
 
 int yywrap()
 {
-	return 1;
+        return 1;
 }
 
 void yyerror(char * str)
 {
-	fprintf(stderr, "%s\n", str);
+        fprintf(stderr, "%s\n", str);
 }
 
 int yylex();
@@ -38,21 +38,25 @@ int yylex();
 %}
 
 %union {
-	char * string;
+        char * string;
 }
 
-%token <string> VARIABLE
+%token  <string>        VARIABLE
+%token  <string>        STRING
 
 %%
 
 program:
-	program statement
-	|
-	;
+        program statement
+        |       ;
 
 statement:
-	VARIABLE '=' VARIABLE
-	{
-		cconf_create($1, $3);
-	}
-	;
+        VARIABLE '=' VARIABLE
+        {
+                cconf_create($1, $3);
+        }
+        |       VARIABLE '=' STRING
+                {
+                    cconf_create($1, $3);
+                }
+        ;
