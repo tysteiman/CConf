@@ -26,13 +26,11 @@ int yylex();
 %%
 
 program:
-	program statement '\n'
+	program statement
 	|
 	;
 
 statement:
-	'\n'
-	|
 	VARIABLE '=' VARIABLE
 	{
 		cconf_create($1, $3);

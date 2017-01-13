@@ -17,9 +17,9 @@ void yyerror(char * str);
 			return VARIABLE;
 		}
 
-[\n="]		return *yytext;
+[="]		return *yytext;
 
-[ \t]		;
+[ \t\n]		;
 
 .		yyerror("Unknown character.");
 
