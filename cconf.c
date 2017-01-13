@@ -291,3 +291,8 @@ int cconf_true(char *key)
       return FALSE;
     }
 }
+
+void cconf_set_file(char *file)
+{
+  cconf.file = file;
+}

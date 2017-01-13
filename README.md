@@ -27,7 +27,7 @@ In order to create a variable for use you need a .cconf file either in your proj
 ##### Overwriting the default file
 The default configuration file may be overwritten by setting the cconf.file variable in your host program (wherever your main function is). This must be set before calling cconf_init();
 
-`cconf.file = "./bin/target.ini"`
+`cconf_set_file("./bin/target.ini");`
 
 This will change the default configuration to be parsed from ./.cconf to ./bin/target.ini.
 
@@ -65,7 +65,7 @@ There are some system variables that you can set in your .cconf file.
 
 int main()
 {
-  cconf.file = "./bin/target";
+  cconf_set_file("./bin/target");
   cconf_init();
   cconf_free(cconf.table);
 }
@@ -90,7 +90,7 @@ void log_res(int a, int b)
 
 int main()
 {
-  cconf.file = "./bin/target";
+  cconf_set_file("./bin/target");
 
   cconf_init();
 

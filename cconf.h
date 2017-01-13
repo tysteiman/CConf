@@ -61,5 +61,6 @@ char   * cconf_value(char *key);
 int      cconf_value_print(char *key);
 char   * cconf_file();
 int      cconf_true(char *key);
+void     cconf_set_file(char *file);
 
 #endif
