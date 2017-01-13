@@ -31,7 +31,7 @@ void yyerror(char * str);
 
 [#].*\n			;       /* Ignore comments */
 
-;;.*\n			;       /* Alternate comment */
+;.*\n			;       /* Alternate comment */
 
 [0-9]+			{
 				yylval.string = strdup(yytext);
