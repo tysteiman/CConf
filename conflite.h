@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  ************************************************************************/
 
-#ifndef CONFLITE_LIB
-#define CONFLITE_LIB
+#ifndef CONFLITE_MAIN_H
+#define CONFLITE_MAIN_H
 
 #include <stdio.h>
 
