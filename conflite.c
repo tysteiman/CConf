@@ -190,7 +190,7 @@ void conflite_free()
   hash_t *table;
 
   table = conflite.table;
-  
+
   while (table != NULL)
     {
       tmp = table;
