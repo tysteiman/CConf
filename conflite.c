@@ -47,7 +47,7 @@ void conflite_init()
     }
   else
     {
-      printf("ERROR: No configuration file found! Please set: '%s'\n", conflite.file);
+      printf("ERROR: No configuration file found!\nEITHER create: '%s'\nOR set a custom configuration file using conflite_set_file(PATH).\n", conflite.file);
       exit(EXIT_FAILURE);
     }
 }
