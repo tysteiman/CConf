@@ -6,6 +6,15 @@ To install Conflite, simply pull down the repository and run:
 
 `make`
 
+This will create a ./bin/configure binary. You can (and you will want to) easily compile everything yourself instead, just check out the Makefile:
+
+```
+lex lex.l
+yacc -d parse.y
+gcc -o ./bin/<name> *.c
+
+```
+
 If you already have a Makefile  in your repository, be aware because this will overwrite that as of right now.
 
 ## Usage
