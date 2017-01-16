@@ -1,6 +1,6 @@
 /*************************************************************************
- * CConf - A micro configuration system for C projects.                  *
- * cconf.c                                                               *
+ * Conflite - A micro configuration system for C projects.               *
+ * conflite.c                                                            *
  *                                                                       *
  * Copyright (C) 2017  Tyler M. Steiman                                  *
  *                                                                       *
@@ -23,21 +23,21 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "cconf.h"
+#include "conflite.h"
 
 int yyparse();
 
 /**
- * Main initialization process for cconf. This will set our configuration
+ * Main initialization process for conflite. This will set our configuration
  * table to nil, and make sure we have a config file to parse. If we have
  * a file that is accessible we start yyparse() which will begin the parsing
- * sequence and build cconf.table
+ * sequence and build conflite.table
  */
-void cconf_init()
+void conflite_init()
 {
-  cconf.table = NULL;
+  conflite.table = NULL;
 
-  char *conf = cconf_file();
+  char *conf = conflite_file();
 
   if (conf)
     {
@@ -47,29 +47,29 @@ void cconf_init()
     }
   else
     {
-      printf("ERROR: No configuration file found! Please set: '%s'\n", cconf.file);
+      printf("ERROR: No configuration file found! Please set: '%s'\n", conflite.file);
       exit(EXIT_FAILURE);
     }
 }
 
 /**
  * Return configuration file based on path. The local folder
- * takes precedence over the HOME directory. Therefore if a .cconf
+ * takes precedence over the HOME directory. Therefore if a .conflite
  * file is located in the current file, it will return that file. If not,
- * it will check to see if there is a .cconf file found in HOME.
+ * it will check to see if there is a .conflite file found in HOME.
  */
-char *cconf_file()
+char *conflite_file()
 {
-  if (!cconf.file)
+  if (!conflite.file)
     {
-      cconf.file = "./.cconf";
+      conflite.file = "./.conflite";
     }
 
-  char *lookup[CCONF_FILE_LOOKUP_TABLE];
-  lookup[0]  = cconf.file;
+  char *lookup[CONFLITE_FILE_LOOKUP_TABLE];
+  lookup[0]  = conflite.file;
 
   char *home = getenv("HOME");
-  char *path = "/.cconf";
+  char *path = "/.conflite";
   size_t len = strlen(home) + strlen(path) + 1;
 
   char *full = malloc(len);
@@ -83,7 +83,7 @@ char *cconf_file()
 
   int i;
 
-  for (i = 0; i <= (CCONF_FILE_LOOKUP_TABLE - 1); i++)
+  for (i = 0; i <= (CONFLITE_FILE_LOOKUP_TABLE - 1); i++)
     {
       if (access(lookup[i], F_OK|R_OK) != -1)
         {
@@ -100,21 +100,21 @@ char *cconf_file()
  * the initial values as the key/value args passed. Otherwise it simply
  * creates another key/value record in the table for later.
  */
-void cconf_create(char *key, char *value, char *type)
+void conflite_create(char *key, char *value, char *type)
 {
   /* if head has not been initialized yet */
-  if (cconf.table == NULL)
+  if (conflite.table == NULL)
     {
-      cconf.table        = malloc(sizeof(hash_t));
-      cconf.table->key   = key;
-      cconf.table->value = value;
-      cconf.table->type  = type;
-      cconf.table->next  = NULL;
+      conflite.table        = malloc(sizeof(hash_t));
+      conflite.table->key   = key;
+      conflite.table->value = value;
+      conflite.table->type  = type;
+      conflite.table->next  = NULL;
     }
   else
     {
-      hash_t *head = cconf.table;
-      hash_t *tmp  = cconf_find(key);
+      hash_t *head = conflite.table;
+      hash_t *tmp  = conflite_find(key);
 
       /* Simply overwrite the value if key already exists. */
       if (tmp)
@@ -138,9 +138,9 @@ void cconf_create(char *key, char *value, char *type)
     }
 
   /* if debug_print_table is set we need to print the whole table. */
-  if (cconf_true("debug_print_table"))
+  if (conflite_true("debug_print_table"))
     {
-      cconf_print_table();
+      conflite_print_table();
     }
 }
 
@@ -150,12 +150,12 @@ void cconf_create(char *key, char *value, char *type)
  * then, if the string is 'true', 'TRUE', or '1', we consider it to be
  * true and return t/f.
  */
-int cconf_assert(char *str)
+int conflite_assert(char *str)
 {
   if (str == FALSE                ||
-      (!cconf_streql(str, "true") &&
-       !cconf_streql(str, "TRUE") &&
-       !cconf_streql(str, "1")))
+      (!conflite_streql(str, "true") &&
+       !conflite_streql(str, "TRUE") &&
+       !conflite_streql(str, "1")))
     {
       return FALSE;
     }
@@ -169,9 +169,9 @@ int cconf_assert(char *str)
  * Used primarily for debugging, this simply loops through the lookup table
  * and prints each key/value pair.
  */
-void cconf_print_table()
+void conflite_print_table()
 {
-  hash_t *head = cconf.table;
+  hash_t *head = conflite.table;
   while (head != NULL)
     {
       printf("Key: %s\t\t-->\t\t%s\t(%s)\n", head->key, head->value, head->type);
@@ -183,10 +183,13 @@ void cconf_print_table()
 /**
  * Loop through the lookup table and free each node.
  */
-void cconf_free(hash_t *table)
+void conflite_free()
 {
   hash_t *tmp;
+  hash_t *table;
 
+  table = conflite.table;
+  
   while (table != NULL)
     {
       tmp = table;
@@ -202,14 +205,14 @@ void cconf_free(hash_t *table)
  * be changed depending on the result of this function when needed
  * (mainly for overwriting values).
  */
-hash_t *cconf_find(char *key)
+hash_t *conflite_find(char *key)
 {
   hash_t *head;
-  head = cconf.table;
+  head = conflite.table;
 
   while (head != NULL)
     {
-      if (cconf_streql(head->key, key))
+      if (conflite_streql(head->key, key))
         {
           return head;
         }
@@ -226,7 +229,7 @@ hash_t *cconf_find(char *key)
  * Simple wrapper around strncmp to compare 2 strings. Return integer
  * based on whether the two strings match or not.
  */
-int cconf_streql(char *str1, char *str2)
+int conflite_streql(char *str1, char *str2)
 {
   if (strncmp(str1, str2, strlen(str2)) == 0)
     {
@@ -241,13 +244,13 @@ int cconf_streql(char *str1, char *str2)
 /**
  * Find a specific entry from the lookup table by key however this will
  * return the actual string value of 'value' if found. Otherwise return false.
- * This utilizes cconf_value() to fetch the entire node, then return only
+ * This utilizes conflite_value() to fetch the entire node, then return only
  * the value itself. This is useful for fetching back the raw node's value itself
  * instead of the entire node.
  */
-char *cconf_value(char *key)
+char *conflite_value(char *key)
 {
-  hash_t *tmp = cconf_find(key);
+  hash_t *tmp = conflite_find(key);
 
   if (!tmp)
     {
@@ -263,9 +266,9 @@ char *cconf_value(char *key)
  * Print a single value if exists. If the value does not exist return FALSE.
  * When the value exists it will both print & return TRUE.
  */
-int cconf_value_print(char *key)
+int conflite_value_print(char *key)
 {
-  char *val = cconf_value(key);
+  char *val = conflite_value(key);
   if (val == FALSE)
     {
       return FALSE;
@@ -280,9 +283,9 @@ int cconf_value_print(char *key)
 /**
  * A simple wrapper around asserting a value.
  */
-int cconf_true(char *key)
+int conflite_true(char *key)
 {
-  if (cconf_assert(cconf_value(key)))
+  if (conflite_assert(conflite_value(key)))
     {
       return TRUE;
     }
@@ -295,7 +298,7 @@ int cconf_true(char *key)
 /**
  * Setter for custom configuration file to be parsed.
  */
-void cconf_set_file(char *file)
+void conflite_set_file(char *file)
 {
-  cconf.file = file;
+  conflite.file = file;
 }

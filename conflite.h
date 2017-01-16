@@ -1,6 +1,6 @@
 /*************************************************************************
- * CConf - A micro configuration system for C projects.                  *
- * cconf.h                                                               *
+ * Conflite - A micro configuration system for C projects.               *
+ * conflite.h                                                            *
  *                                                                       *
  * Copyright (C) 2017  Tyler M. Steiman                                  *
  *                                                                       *
@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  ************************************************************************/
 
-#ifndef CCONF_LIB
-#define CCONF_LIB
+#ifndef CONFLITE_LIB
+#define CONFLITE_LIB
 
 #include <stdio.h>
 
@@ -28,12 +28,12 @@ extern FILE * yyin;
 
 #define TRUE 1
 #define FALSE 0
-#define CCONF_FILE_LOOKUP_TABLE 2
+#define CONFLITE_FILE_LOOKUP_TABLE 2
 
 /**
  * Main structure for our lookup table. A simple linked list
  * that allows us to enter as many records as we need. This is
- * to be included inside of a cconf_t struct and it should be
+ * to be included inside of a conflite_t struct and it should be
  * handled that way for the sake of not having 5,000 structs
  * throughout the application that are all connected.
  * @todo right now the type is only signifying the type of the
@@ -54,28 +54,28 @@ typedef struct Hash {
  * contains other program meta data such as the default file name
  * of the configuration to be parsed. This should be the only struct
  * that is directly accessed throughout the program, everything
- * should have to be set through cconf.table->value, etc.
+ * should have to be set through conflite.table->value, etc.
  */
 typedef struct {
   char   * file;   /* Configuration file's name */
   hash_t * table;  /* hash_t ptr for the lookup table */
-} cconf_t;
+} conflite_t;
 
 /* Initialize lookup table so we can access it throughout. */
-cconf_t cconf;
+conflite_t conflite;
 
 /* BEGIN DECLS */
-void     cconf_init();
-void     cconf_create(char *key, char *value, char *type);
-void     cconf_print_table();
-void     cconf_free(hash_t *table);
-hash_t * cconf_find(char *key);
-int      cconf_streql(char *str1, char *str2);
-int      cconf_assert(char *str);
-char   * cconf_value(char *key);
-int      cconf_value_print(char *key);
-char   * cconf_file();
-int      cconf_true(char *key);
-void     cconf_set_file(char *file);
+void     conflite_init();
+void     conflite_create(char *key, char *value, char *type);
+void     conflite_print_table();
+void     conflite_free();
+hash_t * conflite_find(char *key);
+int      conflite_streql(char *str1, char *str2);
+int      conflite_assert(char *str);
+char   * conflite_value(char *key);
+int      conflite_value_print(char *key);
+char   * conflite_file();
+int      conflite_true(char *key);
+void     conflite_set_file(char *file);
 
 #endif

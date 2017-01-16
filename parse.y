@@ -1,5 +1,5 @@
 /*************************************************************************
- * CConf - A micro configuration system for C projects.                  *
+ * Conflite - A micro configuration system for C projects.               *
  * parse.y                                                               *
  *                                                                       *
  * Copyright (C) 2017  Tyler M. Steiman                                  *
@@ -21,7 +21,7 @@
 %{
 
 #include <stdio.h>
-#include "cconf.h"
+#include "conflite.h"
 
 int yywrap()
 {
@@ -56,16 +56,16 @@ program:
 statement:
 	VARIABLE '=' INTEGER
         {
-		cconf_create($1, $3, "integer");
+		conflite_create($1, $3, "integer");
         }
         |       
         VARIABLE '=' VARIABLE
         {
-		cconf_create($1, $3, "string");
+		conflite_create($1, $3, "string");
         }
         |
         VARIABLE '=' STRING
         {
-		cconf_create($1, $3, "string");
+		conflite_create($1, $3, "string");
         }
         ;

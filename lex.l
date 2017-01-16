@@ -1,5 +1,5 @@
 /*************************************************************************
- * CConf - A micro configuration system for C projects.                  *
+ * Conflite - A micro configuration system for C projects.               *
  * lex.l                                                                 *
  *                                                                       *
  * Copyright (C) 2017  Tyler M. Steiman                                  *
