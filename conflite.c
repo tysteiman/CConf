@@ -308,4 +308,3 @@ void conflite_set_file(char *file)
 
   wordfree(&exp_res);
 }
-
