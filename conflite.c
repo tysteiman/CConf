@@ -303,5 +303,9 @@ void conflite_set_file(char *file)
 {
   wordexp_t exp_res;
   wordexp(file, &exp_res, 0);
-  conflite.file = exp_res.we_wordv[0];
+
+  conflite.file = strdup(exp_res.we_wordv[0]);
+
+  wordfree(&exp_res);
 }
+
