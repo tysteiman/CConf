@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <wordexp.h>
 
 #include "conflite.h"
 
@@ -300,5 +301,7 @@ int conflite_true(char *key)
  */
 void conflite_set_file(char *file)
 {
-  conflite.file = file;
+  wordexp_t exp_res;
+  wordexp(file, &exp_res, 0);
+  conflite.file = exp_res.we_wordv[0];
 }

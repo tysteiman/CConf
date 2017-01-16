@@ -29,6 +29,12 @@ The default configuration file may be overwritten by setting the conflite.file v
 
 `conflite_set_file("./bin/target.ini");`
 
+NOTE:
+
+You can use tilde expansion for setting the path as well:
+
+`conflite_set_file("~/target.ini");`
+
 This will change the default configuration to be parsed from ./.conflite to ./bin/target.ini.
 
 #### Setting variables
