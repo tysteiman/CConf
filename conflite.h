@@ -28,7 +28,9 @@ extern FILE * yyin;
 
 #define TRUE 1
 #define FALSE 0
-#define CONFLITE_FILE_LOOKUP_TABLE 2
+
+#define CONFLITE_FILE_LOOKUP_TABLE_LENGTH 2
+#define CONFLITE_DEFAULT_FILE "./.conflite"
 
 /**
  * Main structure for our lookup table. A simple linked list

@@ -63,10 +63,10 @@ char *conflite_file()
 {
   if (!conflite.file)
     {
-      conflite.file = "./.conflite";
+      conflite.file = CONFLITE_DEFAULT_FILE;
     }
 
-  char *lookup[CONFLITE_FILE_LOOKUP_TABLE];
+  char *lookup[CONFLITE_FILE_LOOKUP_TABLE_LENGTH];
   lookup[0]  = conflite.file;
 
   char *home = getenv("HOME");
@@ -84,7 +84,7 @@ char *conflite_file()
 
   int i;
 
-  for (i = 0; i <= (CONFLITE_FILE_LOOKUP_TABLE - 1); i++)
+  for (i = 0; i <= (CONFLITE_FILE_LOOKUP_TABLE_LENGTH - 1); i++)
     {
       if (access(lookup[i], F_OK|R_OK) != -1)
         {
