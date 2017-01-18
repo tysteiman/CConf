@@ -298,6 +298,11 @@ void conflite_set_file(char *file)
   conflite.file = path;
 }
 
+/**
+ * Return the full path of a given string. This is mainly
+ * used for when the user passes custom file paths or we
+ * we need to get the user's home directory or relative paths.
+ */
 char *conflite_full_path(char *rel)
 {
   wordexp_t exp_res;
