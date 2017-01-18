@@ -79,5 +79,5 @@ int      conflite_value_print(char *key);
 char   * conflite_file();
 int      conflite_true(char *key);
 void     conflite_set_file(char *file);
-
+char   * conflite_full_path(char *rel);
 #endif

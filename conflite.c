@@ -69,18 +69,10 @@ char *conflite_file()
   char *lookup[CONFLITE_FILE_LOOKUP_TABLE_LENGTH];
   lookup[0]  = conflite.file;
 
-  char *home = getenv("HOME");
-  char *path = "/.conflite";
-  size_t len = strlen(home) + strlen(path) + 1;
+  char *home;
 
-  char *full = malloc(len);
-
-  strcpy(full, home);
-  strcat(full, path);
-
-  lookup[1] = full;
-
-  free(full);
+  home = conflite_full_path("~/.conflite");
+  lookup[1] = home;
 
   int i;
 
@@ -301,10 +293,21 @@ int conflite_true(char *key)
  */
 void conflite_set_file(char *file)
 {
-  wordexp_t exp_res;
-  wordexp(file, &exp_res, 0);
+  char *path;
+  path          = conflite_full_path(file);
+  conflite.file = path;
+}
 
-  conflite.file = strdup(exp_res.we_wordv[0]);
+char *conflite_full_path(char *rel)
+{
+  wordexp_t exp_res;
+  char *tmp;
+
+  wordexp(rel, &exp_res, 0);
+
+  tmp = strdup(exp_res.we_wordv[0]);
 
   wordfree(&exp_res);
+
+  return tmp;
 }
